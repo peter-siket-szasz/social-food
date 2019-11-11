@@ -7,6 +7,8 @@ import { GoogleMap, MapMarker, MapInfoWindow } from "@angular/google-maps";
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
+  width = document.getElementById("wrapper").offsetWidth - 30 + 'px';
+  height = window.innerHeight - 200 + 'px';
   zoom = 15;
   center: google.maps.LatLngLiteral = {
     lat: 60.186881, 
