@@ -7,27 +7,25 @@ import { GoogleMap, MapMarker, MapInfoWindow } from "@angular/google-maps";
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
-  zoom = 12;
-  center: google.maps.LatLngLiteral;
+  zoom = 15;
+  center: google.maps.LatLngLiteral = {
+    lat: 60.186881, 
+    lng: 24.827493
+  };
+
   options: google.maps.MapOptions = {
-    mapTypeId: 'hybrid',
+    mapTypeId: 'roadmap',
     zoomControl: false,
     scrollwheel: false,
     disableDoubleClickZoom: false,
-    maxZoom: 15,
-    minZoom: 8
+    maxZoom: 18,
+    minZoom: 14
   }
 
 
   constructor() { }
 
   ngOnInit() {
-    navigator.geolocation.getCurrentPosition(pos => {
-      this.center = {
-        lat: pos.coords.latitude,
-        lng: pos.coords.longitude
-      };
-    })
   }
 
 }
