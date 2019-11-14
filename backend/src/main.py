@@ -38,3 +38,7 @@ def add_offer():
     new_offer = OfferSchema().dump(offer)
     session.close()
     return jsonify(new_offer), 201
+
+@app.route('/')
+def test_method():
+    return 'hello world'

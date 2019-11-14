@@ -1,4 +1,5 @@
-from sqlalchemy import Column, String, Integer, ARRAY, relationship, back_populates
+from sqlalchemy import Column, String, Integer, ARRAY
+from sqlalchemy.orm import relationship
 
 from .entity import Entity, Base
 
@@ -25,4 +26,4 @@ class UserSchema(Schema):
     name = fields.String()
     email = fields.String()
     pw = Column(String)
-    offers = fields.Nested("OfferSchema", many=True, exclude=("owner"))
+    offers = fields.Nested("OfferSchema", many=True, exclude=("owner",))

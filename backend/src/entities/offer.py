@@ -1,4 +1,5 @@
-from sqlalchemy import Column, String, Integer, ARRAY, relationship, ForeignKey, back_populates
+from sqlalchemy import Column, String, Integer, ARRAY, ForeignKey
+from sqlalchemy.orm import relationship
 
 from .entity import Entity, Base
 from .user import User, UserSchema
