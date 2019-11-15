@@ -1,8 +1,9 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { FormBuilder } from '@angular/forms';
 import { HttpService } from '../../services/http.service';
 import { CookieService } from 'ngx-cookie-service';
+import { CredentialService } from 'src/app/services/credential.service';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  @Input() username;
 
   modalRef: BsModalRef;
   headerText = 'Kirjaudu';
@@ -18,7 +20,7 @@ export class LoginComponent implements OnInit {
   loginForm;
 
   constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private httpService: HttpService,
-              private cookieService: CookieService) {
+              private cookieService: CookieService, private credentialService: CredentialService) {
     this.registerForm = this.formBuilder.group({
       name: '',
       email: '',
@@ -60,12 +62,19 @@ export class LoginComponent implements OnInit {
         alert(response.error);
       } else {
         this.cookieService.set('user_id', response.id);
+        this.cookieService.set('user_name', response.name);
+        this.credentialService.changeUser(response.name);
         this.closeModal();
       }
     },
     error => {
       alert(error.error);
     })
+  }
+
+  logout() {
+    this.credentialService.changeUser('');
+    this.cookieService.deleteAll();
   }
 
 }

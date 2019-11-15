@@ -9,8 +9,8 @@
             <a class="nav-item nav-link" href="#">Fetch food</a>
             <a class="nav-item nav-link" href="#">Offer food</a>
             <a class="nav-item nav-link" href="#">Profile</a>
-            <app-login *ngIf="mobile"></app-login>
+            <app-login *ngIf="mobile" [username]="username"></app-login>
         </div>
     </div>
-    <app-login *ngIf="!mobile"></app-login>
+    <app-login *ngIf="!mobile" [username]="username"></app-login>
 </nav>

@@ -1,16 +1,23 @@
-<button mat-raised-button class="login" type="button" (click)="openModal(login)">Kirjaudu</button>
-<button mat-raised-button class="login" type="button" (click)="openModal(register)">Rekisteröidy</button>
+<div *ngIf="!username">
+    <button mat-raised-button class="login" type="button" (click)="openModal(login)">Log In</button>
+    <button mat-raised-button class="login" type="button" (click)="openModal(register)">Register</button>
+</div>
+
+<div *ngIf="username">
+    <span class="logout-text">Logged in as {{username}}</span>
+    <button mat-raised-button class="logout" type="button" (click)="logout()">Logout</button>
+</div>
 
 <ng-template #login>
-    <div class="modal-header">Kirjaudu</div>
+    <div class="modal-header">Log In</div>
     <div class="modal-body">
         <div class="login">
             <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
-                <label for="name">Nimi</label>
+                <label for="name">Name</label>
                 <input type="text" formControlName="name">
-                <label for="pw">Salasana</label>
+                <label for="pw">Password</label>
                 <input type="text" formControlName="pw">
-                <button type="submit" class="btn">Kirjaudu</button>
+                <button type="submit" class="btn">Log In</button>
             </form>
         </div>
     </div>
@@ -20,19 +27,19 @@
 </ng-template>
 
 <ng-template #register>
-    <div class="modal-header">Rekisteröidy</div>
+    <div class="modal-header">Register</div>
     <div class="modal-body">
         <div class="login">
             <form [formGroup]="registerForm" (ngSubmit)="registerUser(registerForm.value)">
-                <label for="name">Nimi</label>
+                <label for="name">Name</label>
                 <input type="text" formControlName="name">
-                <label for="email">Sähköposti</label>
+                <label for="email">Email</label>
                 <input type="text" formControlName="email">
                 <label for="telegram">Telegram</label>
                 <input type="text" formControlName="telegram">
-                <label for="pw">Salasana</label>
+                <label for="pw">Password</label>
                 <input type="text" formControlName="pw">
-                <button type="submit" class="btn">Rekisteröidy</button>
+                <button type="submit" class="btn">Register</button>
             </form>
         </div>
     </div>

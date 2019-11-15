@@ -85,7 +85,7 @@ def login():
     
     if posted_creds["pw"] == user["pw"]:
         app.logger.debug(user["id"])
-        return jsonify({"id": user["id"]}), 201
+        return jsonify({"id": user["id"], "name": user["name"]}), 201
     else:
         app.logger.debug("Incorrect pw")
         return jsonify({"error": "Incorrect password"}), 201
