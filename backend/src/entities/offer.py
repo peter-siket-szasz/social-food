@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, ARRAY, ForeignKey
+from sqlalchemy import Column, String, Integer, ARRAY, ForeignKey, Float
 from sqlalchemy.orm import relationship
 
 from .entity import Entity, Base
@@ -11,14 +11,18 @@ class Offer(Base, Entity):
 
     title = Column(String)
     description = Column(String)
+    lat = Column(Float)
+    lng = Column(Float)
     owner_id = Column(Integer, ForeignKey('user.id'))
     owner = relationship("User", back_populates="offers")
 
-    def __init__(self, title, description, owner_id):
+    def __init__(self, title, description, lat, lng, owner_id):
         Entity.__init__(self)
         self.title = title
         self.description = description
         self.owner_id = owner_id
+        self.lat = lat
+        self.lng = lng
 
 class OfferSchema(Schema):
     id = fields.Number()
@@ -26,6 +30,8 @@ class OfferSchema(Schema):
 
     title = fields.String()
     description = fields.String()
+    lat = fields.Number()
+    lng = fields.Number()
     owner_id = fields.Number()
     owner = fields.Nested(UserSchema, only=("name", "email"))
 

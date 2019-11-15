@@ -23,7 +23,8 @@ def get_offers():
     session.close()
     return jsonify(offers)
 
-@app.route('/offers', methods=["POST"])
+
+@app.route('/addoffer', methods=["POST"])
 def add_offer():
     posted_offer = OfferSchema(only=("title", "description", "owner_id")).load(request.get_json())
 
@@ -38,6 +39,22 @@ def add_offer():
     new_offer = OfferSchema().dump(offer)
     session.close()
     return jsonify(new_offer), 201
+
+
+@app.route('/users', methods=["POST"])
+def add_user():
+    posted_user = UserSchema(only=("name", "email", "pw")).load(request.get_json())
+
+    user = User(**posted_user)
+
+    session = Session()
+    session.add(user)
+    session.commit()
+
+    new_user = UserSchema.dump(user)
+    session.close()
+    return jsonify(new_user), 201
+
 
 @app.route('/')
 def test_method():
