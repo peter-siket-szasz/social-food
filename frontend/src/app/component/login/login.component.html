@@ -1,25 +1,42 @@
-<button mat-raised-button type="button" (click)="openModal(login)">Kirjaudu / Rekisteröidy</button>
+<button mat-raised-button class="login" type="button" (click)="openModal(login)">Kirjaudu</button>
+<button mat-raised-button class="login" type="button" (click)="openModal(register)">Rekisteröidy</button>
 
 <ng-template #login>
-    <div class="modal-header">
-        <button type="button" [class.current]="login" (click)="swapLogin()">Kirjaudu</button>
-        <button type="button" [class.current]="login" (click)="swapRegister()">Rekisteröidy</button>
-    </div>
+    <div class="modal-header">Kirjaudu</div>
     <div class="modal-body">
         <div class="login">
-            <form action="">
-                <label for="">Nimi</label>
-                <input type="text">
-            </form>
-        </div>
-        <div class="register">
-            <form action="">
-                <label for="">Nimi</label>
-                <input type="text">
+            <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
+                <label for="name">Nimi</label>
+                <input type="text" formControlName="name">
+                <label for="pw">Salasana</label>
+                <input type="text" formControlName="pw">
+                <button type="button" class="btn">Kirjaudu</button>
             </form>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn" type="button" (click)="closeModal()"></button>
+        <button class="btn" type="button" (click)="closeModal()">Sulje</button>
+    </div>
+</ng-template>
+
+<ng-template #register>
+    <div class="modal-header">Rekisteröidy</div>
+    <div class="modal-body">
+        <div class="login">
+            <form [formGroup]="registerForm" (ngSubmit)="registerUser(registerForm.value)">
+                <label for="name">Nimi</label>
+                <input type="text" formControlName="name">
+                <label for="email">Sähköposti</label>
+                <input type="text" formControlName="email">
+                <label for="telegram">Telegram</label>
+                <input type="text" formControlName="telegram">
+                <label for="pw">Salasana</label>
+                <input type="text" formControlName="pw">
+                <button type="submit" class="btn">Rekisteröidy</button>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" type="button" (click)="closeModal()">Sulje</button>
     </div>
 </ng-template>

@@ -2,3 +2,18 @@
     background: darkgray;
     color: white;
 }
+
+.login {
+    margin: 0 2px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login .btn {
+    width: 33%;
+    min-width: 100px;
+    margin-top: 15px;
+}

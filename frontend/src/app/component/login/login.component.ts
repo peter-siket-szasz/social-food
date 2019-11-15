@@ -1,5 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { FormBuilder } from '@angular/forms';
+import { HttpService } from '../../services/http.service';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +13,22 @@ export class LoginComponent implements OnInit {
   modalRef: BsModalRef;
   headerText = 'Kirjaudu';
 
-  login = true;
+  registerForm;
+  loginForm;
 
-  constructor(private modalService: BsModalService) { }
+  constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private httpService: HttpService) {
+    this.registerForm = this.formBuilder.group({
+      name: '',
+      email: '',
+      telegram: '',
+      pw: ''
+    });
+
+    this.loginForm = this.formBuilder.group({
+      name: '',
+      pw: ''
+    });
+  }
 
   ngOnInit() {
   }
@@ -26,13 +41,10 @@ export class LoginComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  swapRegister() {
-    this.login = false;
-    console.log('hello');
-  }
-
-  swapLogin() {
-    this.login = true;
+  registerUser(data) {
+    this.httpService.registerUser(data).subscribe(response => {
+      console.log(response);
+    })
   }
 
 }

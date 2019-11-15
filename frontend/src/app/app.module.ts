@@ -4,6 +4,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { MatMenuModule, MatIconModule, MatButtonModule } from '@angular/material';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { FrontPageComponent } from './component/front-page/front-page.component';
@@ -28,7 +30,10 @@ import { LoginComponent } from './component/login/login.component';
     MatIconModule,
     MatButtonModule,
     CollapseModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
