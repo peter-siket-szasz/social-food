@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { FormBuilder } from '@angular/forms';
 import { HttpService } from '../../services/http.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   registerForm;
   loginForm;
 
-  constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private httpService: HttpService) {
+  constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private httpService: HttpService,
+              private cookieService: CookieService) {
     this.registerForm = this.formBuilder.group({
       name: '',
       email: '',
@@ -43,7 +45,26 @@ export class LoginComponent implements OnInit {
 
   registerUser(data) {
     this.httpService.registerUser(data).subscribe(response => {
-      console.log(response);
+      this.cookieService.set('user_id', response.id);
+      this.closeModal();
+      alert('Success!');
+    },
+    error => {
+      alert(error.error);
+    });
+  }
+
+  loginUser(data) {
+    this.httpService.loginUser(data).subscribe(response => {
+      if (response.error) {
+        alert(response.error);
+      } else {
+        this.cookieService.set('user_id', response.id);
+        this.closeModal();
+      }
+    },
+    error => {
+      alert(error.error);
     })
   }
 

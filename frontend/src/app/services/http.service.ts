@@ -10,14 +10,19 @@ const api_url: string = environment.api_url;
   providedIn: 'root'
 })
 export class HttpService {
+  private httpHeader = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
 
   constructor(private http: HttpClient) { }
 
   registerUser(data) {
-    return this.http.post<any>(api_url+'/users', data);
+    return this.http.post<any>(api_url+'/users', data, this.httpHeader);
   }
 
   loginUser(data) {
-
+    return this.http.post<any>(api_url+'/login', data, this.httpHeader);
   }
 }
