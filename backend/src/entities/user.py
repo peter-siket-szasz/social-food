@@ -8,7 +8,7 @@ from marshmallow import Schema, fields
 class User(Base, Entity):
     __tablename__ = "user"
 
-    name = Column(String)
+    name = Column(String, unique=True)
     email = Column(String)
     telegram = Column(String)
     pw = Column(String)

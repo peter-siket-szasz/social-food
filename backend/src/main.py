@@ -27,7 +27,7 @@ def get_offers():
     offers = schema.dump(offer_objects)
 
     session.close()
-    return jsonify(offers)
+    return jsonify(offers), 201
 
 
 @app.route('/addoffer', methods=["POST"])
@@ -54,12 +54,42 @@ def add_user():
     user = User(**posted_user)
 
     session = Session()
-    session.add(user)
-    session.commit()
+    try:
+        session.add(user)
+        session.commit()
+    except Exception:
+        session.close()
+        return 'User with that name already exists', 500
 
     new_user = UserSchema().dump(user)
     session.close()
     return jsonify(new_user), 201
+
+@app.route('/login', methods=["POST"])
+def login():
+    posted_creds = request.get_json()
+    username = posted_creds["name"]
+
+    session = Session()
+
+    user_object = session.query(User).filter(User.name==username).first()
+    app.logger.debug(user_object)
+
+    schema = UserSchema()
+    user = schema.dump(user_object)
+    app.logger.debug(user)
+    session.close()
+
+    if not user:
+        return jsonify({"error": "No user with that name"}), 201
+    
+    if posted_creds["pw"] == user["pw"]:
+        app.logger.debug(user["id"])
+        return jsonify({"id": user["id"]}), 201
+    else:
+        app.logger.debug("Incorrect pw")
+        return jsonify({"error": "Incorrect password"}), 201
+    
 
 
 @app.route('/')
