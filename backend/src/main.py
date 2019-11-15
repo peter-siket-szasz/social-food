@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+import logging
 
 from src.entities.entity import engine, Base, Session
 from src.entities.user import User, UserSchema
@@ -7,6 +8,11 @@ from src.entities.offer import Offer, OfferSchema
 
 app = Flask(__name__)
 CORS(app)
+
+if __name__ != '__main__':
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
 
 Base.metadata.create_all(engine)
 
@@ -43,7 +49,7 @@ def add_offer():
 
 @app.route('/users', methods=["POST"])
 def add_user():
-    posted_user = UserSchema(only=("name", "email", "pw")).load(request.get_json())
+    posted_user = UserSchema(only=("name", "email", "telegram", "pw")).load(request.get_json())
 
     user = User(**posted_user)
 
@@ -51,7 +57,7 @@ def add_user():
     session.add(user)
     session.commit()
 
-    new_user = UserSchema.dump(user)
+    new_user = UserSchema().dump(user)
     session.close()
     return jsonify(new_user), 201
 
