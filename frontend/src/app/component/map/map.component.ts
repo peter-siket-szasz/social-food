@@ -1,5 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { FormBuilder } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
+import { HttpService } from 'src/app/services/http.service';
+
 
 @Component({
   selector: 'app-map',
@@ -26,26 +31,69 @@ export class MapComponent implements OnInit {
   infoContent = '';
   dibsed = false;
 
-  constructor() { }
-  
-  ngOnInit() {
+  modalRef: BsModalRef;
+  offerForm;
+  mapClickEvent;
+
+  constructor(private modalService: BsModalService, private formBuilder: FormBuilder, 
+    private cookieService: CookieService, private httpService: HttpService) {
+    this.offerForm = this.formBuilder.group({
+      title: '',
+      description: ''
+    })
   }
   
-  addMarker(event) {
-    this.markers.push({
-      position: {
-        lat: event.latLng.lat(),
-        lng: event.latLng.lng()
-      },
-      label: {
-        color: 'black',
-        text: 'Tikka masala ' + (this.markers.length + 1)
-      },
-      title: 'Title ' + (this.markers.length + 1),
-      info: 'Mm, hyvää',
-      options: {
-        animation: google.maps.Animation.DROP
-      }
+  ngOnInit() {
+    this.getOffers();
+  }
+  
+  openOfferModal(template: TemplateRef<any>, event) {
+    if (!this.cookieService.get('user_id')) {
+      alert('Please log in to offer food');
+      return
+    }
+    this.modalRef = this.modalService.show(template);
+    this.mapClickEvent = event;
+  }
+
+  closeModal() {
+    this.modalRef.hide();
+  }
+
+  addOffer(formData) {
+    const requestData = {
+      title: formData.title,
+      description: formData.description,
+      lat: this.mapClickEvent.latLng.lat(),
+      lng: this.mapClickEvent.latLng.lng(),
+      owner_id: this.cookieService.get('user_id')
+    }
+    this.httpService.addOffer(requestData).subscribe(response => {
+      this.getOffers();
+      this.closeModal();
+    })
+  }
+
+  getOffers() {
+    this.httpService.getOffers().subscribe(response => {
+      this.markers = [];
+      response.forEach(data => {
+        this.markers.push({
+          position: {
+            lat: data.lat,
+            lng: data.lng
+          },
+          label: {
+            color: 'black',
+            text: '🥩'
+          },
+          title: data.title,
+          info: data.description,
+          options: {
+            animation: google.maps.Animation.DROP
+          }
+        })
+      })
     })
   }
 

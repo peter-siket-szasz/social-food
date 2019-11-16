@@ -29,10 +29,23 @@ def get_offers():
     session.close()
     return jsonify(offers), 201
 
+@app.route('/users')
+def get_users():
+    # Database
+    session = Session()
+    user_objects = session.query(User).all()
+
+    # Create serializable object
+    schema = UserSchema(many=True)
+    users = schema.dump(user_objects)
+
+    session.close()
+    return jsonify(users), 201
+
 
 @app.route('/addoffer', methods=["POST"])
 def add_offer():
-    posted_offer = OfferSchema(only=("title", "description", "owner_id")).load(request.get_json())
+    posted_offer = OfferSchema(only=("title", "description", "lat", "lng", "owner_id")).load(request.get_json())
 
     offer = Offer(**posted_offer)
 

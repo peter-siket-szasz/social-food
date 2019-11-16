@@ -1,4 +1,4 @@
-<google-map [center]="center" [zoom]="zoom" [options]="options" [height]="height" [width]="width" (mapClick)="addMarker($event)">
+<google-map [center]="center" [zoom]="zoom" [options]="options" [height]="height" [width]="width" (mapClick)="openOfferModal(offer, $event)">
     <map-marker #markerElem *ngFor="let marker of markers" 
         [position]="marker.position"
         [label]="marker.label"
@@ -11,3 +11,21 @@
         <button mat-raised-button color="primary" *ngIf="!dibsed" (click)="dibs()">Dibs</button>
     </map-info-window>
 </google-map>
+
+<ng-template #offer>
+    <div class="modal-header">Add offer</div>
+    <div class="modal-body">
+        <div class="login">
+            <form [formGroup]="offerForm" (ngSubmit)="addOffer(offerForm.value)">
+                <label for="title">Food name</label>
+                <input type="text" formControlName="title">
+                <label for="description">Description</label>
+                <input type="text" formControlName="description">
+                <button type="submit" class="btn">Add Offer</button>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" type="button" (click)="closeModal()">Close</button>
+    </div>
+</ng-template>

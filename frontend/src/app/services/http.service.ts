@@ -25,4 +25,12 @@ export class HttpService {
   loginUser(data) {
     return this.http.post<any>(api_url+'/login', data, this.httpHeader);
   }
+
+  addOffer(data) {
+    return this.http.post<any>(api_url+'/addoffer', data, this.httpHeader);
+  }
+
+  getOffers() {
+    return this.http.get<any>(api_url+'/offers');
+  }
 }
