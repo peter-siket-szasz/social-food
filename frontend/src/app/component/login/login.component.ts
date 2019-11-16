@@ -47,7 +47,6 @@ export class LoginComponent implements OnInit {
 
   registerUser(data) {
     this.httpService.registerUser(data).subscribe(response => {
-      this.cookieService.set('user_id', response.id);
       this.closeModal();
       alert('Success!');
     },
