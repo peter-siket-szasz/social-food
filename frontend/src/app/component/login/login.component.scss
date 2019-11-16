@@ -22,6 +22,12 @@ form {
     float: right;
 }
 
+.logout-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
 .logout-text {
     margin-right: 50px;
+    align-self: center;
 }

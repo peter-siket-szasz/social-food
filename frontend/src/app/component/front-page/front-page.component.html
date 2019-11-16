@@ -4,8 +4,11 @@
         <h1>Social Food</h1>
         <p>Explanation here</p>
         <div>
-            <p>Google maps here</p>
-            <app-map></app-map>
+            <div class="map-header">
+                <p>Google maps here</p>
+                <button mat-raised-button (click)="emitRefresh()"><mat-icon>refresh</mat-icon></button>
+            </div>
+            <app-map [refreshEvent]="refreshSubject.asObservable()"></app-map>
         </div>
     </div>
 </div>

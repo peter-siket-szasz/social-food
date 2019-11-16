@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Input } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { FormBuilder } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpService } from 'src/app/services/http.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -13,11 +14,13 @@ import { HttpService } from 'src/app/services/http.service';
 })
 export class MapComponent implements OnInit {
   @ViewChild(MapInfoWindow, {static: false}) infoWindow: MapInfoWindow;
-  width = document.getElementById("wrapper").offsetWidth - 30 + 'px';
+  @Input() refreshEvent: Observable<void>;
+
+  width = document.getElementById('wrapper').offsetWidth - 30 + 'px';
   height = window.innerHeight - 200 + 'px';
   zoom = 15;
   center: google.maps.LatLngLiteral = {
-    lat: 60.186881, 
+    lat: 60.186881,
     lng: 24.827493
   };
 
@@ -26,7 +29,7 @@ export class MapComponent implements OnInit {
     disableDoubleClickZoom: false,
     maxZoom: 18,
     minZoom: 14
-  }
+  };
   markers = [];
   infoContent = '';
   dibsed = false;
@@ -35,22 +38,23 @@ export class MapComponent implements OnInit {
   offerForm;
   mapClickEvent;
 
-  constructor(private modalService: BsModalService, private formBuilder: FormBuilder, 
-    private cookieService: CookieService, private httpService: HttpService) {
+  constructor(private modalService: BsModalService, private formBuilder: FormBuilder,
+              private cookieService: CookieService, private httpService: HttpService) {
     this.offerForm = this.formBuilder.group({
       title: '',
       description: ''
-    })
+    });
   }
-  
+
   ngOnInit() {
     this.getOffers();
+    this.refreshEvent.subscribe(_ => this.getOffers());
   }
-  
+
   openOfferModal(template: TemplateRef<any>, event) {
     if (!this.cookieService.get('user_id')) {
       alert('Please log in to offer food');
-      return
+      return;
     }
     this.modalRef = this.modalService.show(template);
     this.mapClickEvent = event;
@@ -67,11 +71,11 @@ export class MapComponent implements OnInit {
       lat: this.mapClickEvent.latLng.lat(),
       lng: this.mapClickEvent.latLng.lng(),
       owner_id: this.cookieService.get('user_id')
-    }
-    this.httpService.addOffer(requestData).subscribe(response => {
+    };
+    this.httpService.addOffer(requestData).subscribe(_ => {
       this.getOffers();
       this.closeModal();
-    })
+    });
   }
 
   getOffers() {
@@ -92,9 +96,9 @@ export class MapComponent implements OnInit {
           options: {
             animation: google.maps.Animation.DROP
           }
-        })
-      })
-    })
+        });
+      });
+    });
   }
 
   openInfo(marker: MapMarker, content) {

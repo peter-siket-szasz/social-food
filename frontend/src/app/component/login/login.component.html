@@ -3,7 +3,7 @@
     <button mat-raised-button class="login" type="button" (click)="openModal(register)">Register</button>
 </div>
 
-<div *ngIf="username">
+<div *ngIf="username" class="logout-wrapper">
     <span class="logout-text">Logged in as {{username}}</span>
     <button mat-raised-button class="logout" type="button" (click)="logout()">Logout</button>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CredentialService } from 'src/app/services/credential.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-front-page',
@@ -10,18 +11,22 @@ import { CookieService } from 'ngx-cookie-service';
 export class FrontPageComponent implements OnInit {
   username: string;
 
+  refreshSubject = new Subject<void>();
+
   constructor(private credService: CredentialService, private cookieService: CookieService) { }
 
   ngOnInit() {
     this.credService.currentUser.subscribe(name => {
       this.username = name;
-    })
+    });
 
     const user = this.cookieService.get('user_name');
     if (user) {
       this.credService.changeUser(user);
     }
-
   }
 
+  emitRefresh() {
+    this.refreshSubject.next();
+  }
 }

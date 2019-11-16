@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
     },
     error => {
       alert(error.error);
-    })
+    });
   }
 
   logout() {
