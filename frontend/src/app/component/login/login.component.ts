@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
   }
 
   registerUser(data) {
-    this.httpService.registerUser(data).subscribe(response => {
+    this.httpService.registerUser(data).subscribe(_ => {
       this.closeModal();
       alert('Success!');
     },
@@ -62,8 +62,13 @@ export class LoginComponent implements OnInit {
       } else {
         this.cookieService.set('user_id', response.id);
         this.cookieService.set('user_name', response.name);
-        this.credentialService.changeUser(response.name);
-        this.closeModal();
+        if (this.cookieService.get('user_name') == response.name) {
+          this.credentialService.changeUser(response.name);
+          this.closeModal();
+        } else {
+          alert('Login failed. Please check that cookies are allowed.')
+          this.closeModal();
+        }
       }
     },
     error => {
