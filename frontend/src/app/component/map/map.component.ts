@@ -30,7 +30,7 @@ export class MapComponent implements OnInit {
     minZoom: 14
   };
   markers = [];
-  infoContent = '';
+  openMarker;
   dibsed = false;
   offerId: number;
 
@@ -92,9 +92,10 @@ export class MapComponent implements OnInit {
             text: '🥩'
           },
           title: data.title,
-          info: data.description,
+          description: data.description,
           dibsed: data.dibsedby_id,
           id: data.id,
+          tg: data.owner.telegram,
           options: {
             animation: google.maps.Animation.DROP
           }
@@ -104,6 +105,7 @@ export class MapComponent implements OnInit {
   }
 
   openInfo(marker: MapMarker, markerObject) {
+    this.openMarker = markerObject;
     this.dibsed = Boolean(markerObject.dibsed);
     this.offerId = markerObject.id;
     this.infoWindow.open(marker);

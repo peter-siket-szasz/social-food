@@ -8,3 +8,24 @@ form {
     min-width: 100px;
     margin-top: 15px;
 }
+
+.info-wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 200px;
+    align-items: center;
+}
+
+.dibs {
+    width: 50%;
+}
+
+.description {
+    text-align: center;
+}
+
+.tg {
+    text-align: left;
+    font-size: 1rem;
+    font-weight: bold;
+}
