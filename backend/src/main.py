@@ -27,7 +27,8 @@ def get_offers():
     offers = schema.dump(offer_objects)
 
     session.close()
-    return jsonify(offers), 201
+    return jsonify(offers), 200
+
 
 @app.route('/offers/<user>')
 def get_offers_for(user):
@@ -38,7 +39,20 @@ def get_offers_for(user):
     offers = schema.dump(offer_objects)
 
     session.close()
-    return jsonify(offers), 201
+    return jsonify(offers), 200
+
+
+@app.route('/dibses/<user>')
+def get_dibses(user):
+    session = Session()
+    offer_objects = session.query(Offer).filter(Offer.dibsedby_id==user)
+
+    schema = OfferSchema(many=True)
+    offers = schema.dump(offer_objects)
+
+    session.close()
+    return jsonify(offers), 200
+
 
 @app.route('/offers/<id>', methods=["DELETE"])
 def delete_offer(id):
@@ -47,8 +61,7 @@ def delete_offer(id):
     session.delete(offer)
     session.commit()
     session.close()
-    return "", 201
-
+    return "", 200
 
 
 @app.route('/users')
@@ -62,7 +75,7 @@ def get_users():
     users = schema.dump(user_objects)
 
     session.close()
-    return jsonify(users), 201
+    return jsonify(users), 200
 
 
 @app.route('/addoffer', methods=["POST"])
@@ -79,7 +92,7 @@ def add_offer():
     # return
     new_offer = OfferSchema().dump(offer)
     session.close()
-    return jsonify(new_offer), 201
+    return jsonify(new_offer), 200
 
 
 @app.route('/users', methods=["POST"])
@@ -98,7 +111,7 @@ def add_user():
 
     new_user = UserSchema().dump(user)
     session.close()
-    return jsonify(new_user), 201
+    return jsonify(new_user), 200
 
 @app.route('/login', methods=["POST"])
 def login():
@@ -116,14 +129,14 @@ def login():
     session.close()
 
     if not user:
-        return jsonify({"error": "No user with that name"}), 201
+        return jsonify({"error": "No user with that name"}), 200
     
     if posted_creds["pw"] == user["pw"]:
         app.logger.debug(user["id"])
-        return jsonify({"id": user["id"], "name": user["name"]}), 201
+        return jsonify({"id": user["id"], "name": user["name"]}), 200
     else:
         app.logger.debug("Incorrect pw")
-        return jsonify({"error": "Incorrect password"}), 201
+        return jsonify({"error": "Incorrect password"}), 200
     
 
 

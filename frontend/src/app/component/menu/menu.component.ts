@@ -15,7 +15,7 @@ export class MenuComponent implements OnInit {
   mobile = window.innerWidth < 992;
 
   modalRef: BsModalRef;
-  offers = [1, 2, 3];
+  offers = [];
   dibses = [];
 
   constructor(private modalService: BsModalService, private httpService: HttpService, private cookieService: CookieService,
@@ -33,6 +33,7 @@ export class MenuComponent implements OnInit {
       this.offers = [];
       this.getOffers();
     } else if (name == 'dibs') {
+      this.dibses = [];
       this.getDibses();
     }
     this.modalRef = this.modalService.show(template);
@@ -53,8 +54,17 @@ export class MenuComponent implements OnInit {
       this.closeModal();
     }
   }
-
+  
   getDibses() {
+    const id = this.cookieService.get('user_id');
+    if (id) {
+      this.httpService.getDibsesFor(id).subscribe(response => {
+        this.dibses = response;
+      })
+    } else {
+      alert('Error while getting dibses. Please make sure you are logged in.');
+      this.closeModal();
+    }
 
   }
 

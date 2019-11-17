@@ -38,6 +38,10 @@ export class HttpService {
     return this.http.get<any>(api_url+'/offers/'+id);
   }
 
+  getDibsesFor(id: string) {
+    return this.http.get<any>(api_url+'/dibses/'+id);
+  }
+
   deleteOffer(id: string) {
     return this.http.delete(api_url+'/offers/'+id);
   }
