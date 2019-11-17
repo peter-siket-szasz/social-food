@@ -12,7 +12,6 @@ class User(Base, Entity):
     email = Column(String)
     telegram = Column(String)
     pw = Column(String)
-    offers = relationship("Offer", back_populates="owner")
 
     def __init__(self, name, email, telegram, pw):
         Entity.__init__(self)
@@ -29,4 +28,3 @@ class UserSchema(Schema):
     email = fields.String()
     telegram = fields.String()
     pw = fields.String()
-    offers = fields.Nested("OfferSchema", many=True, exclude=("owner",))

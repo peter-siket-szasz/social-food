@@ -14,7 +14,9 @@ class Offer(Base, Entity):
     lat = Column(Float)
     lng = Column(Float)
     owner_id = Column(Integer, ForeignKey('user.id'))
-    owner = relationship("User", back_populates="offers")
+    owner = relationship("User", foreign_keys=[owner_id])
+    dibsedby_id = Column(Integer, ForeignKey('user.id'))
+    dibsedby = relationship("User", foreign_keys=[dibsedby_id])
 
     def __init__(self, title, description, lat, lng, owner_id):
         Entity.__init__(self)
@@ -33,5 +35,7 @@ class OfferSchema(Schema):
     lat = fields.Number()
     lng = fields.Number()
     owner_id = fields.Number()
-    owner = fields.Nested(UserSchema, only=("name", "email"))
+    owner = fields.Nested(UserSchema, only=("name", "telegram"))
+    dibsedby_id = fields.Number()
+    dibsedby = fields.Nested(UserSchema, only=("name", "telegram"))
 
