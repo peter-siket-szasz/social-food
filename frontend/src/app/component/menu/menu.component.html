@@ -39,7 +39,7 @@
             <mat-list-item *ngIf="dibses.length === 0">No dibses so far</mat-list-item>
             <mat-list-item color="accent" *ngFor="let dibs of dibses; last as isLast">
                 <span class="title">{{dibs.title}}</span>
-                <button mat-raised-button color="warn" class="delete">Delete</button>
+                <button mat-raised-button color="warn" class="delete" (click)="undibs(dibs.id)">Undibs</button>
                 <mat-divider *ngIf="!isLast"></mat-divider>
             </mat-list-item>
         </mat-list>

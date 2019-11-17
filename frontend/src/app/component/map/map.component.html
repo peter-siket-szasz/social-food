@@ -4,11 +4,12 @@
         [label]="marker.label"
         [title]="marker.title"
         [options]="marker.options"
-        (mapClick)="openInfo(markerElem, marker.info)">
+        (mapClick)="openInfo(markerElem, marker)">
     </map-marker>
-    <map-info-window (closeClick)="infoClosed()">
+    <map-info-window>
         <h2>{{infoContent}}</h2>
         <button mat-raised-button color="primary" *ngIf="!dibsed" (click)="dibs()">Dibs</button>
+        <button mat-raised-button disabled color="primary" *ngIf="dibsed">Dibsed</button>
     </map-info-window>
 </google-map>
 

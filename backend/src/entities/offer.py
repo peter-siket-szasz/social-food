@@ -15,7 +15,7 @@ class Offer(Base, Entity):
     lng = Column(Float)
     owner_id = Column(Integer, ForeignKey('user.id'))
     owner = relationship("User", foreign_keys=[owner_id])
-    dibsedby_id = Column(Integer, ForeignKey('user.id'))
+    dibsedby_id = Column(Integer, ForeignKey('user.id'), nullable=True)
     dibsedby = relationship("User", foreign_keys=[dibsedby_id])
 
     def __init__(self, title, description, lat, lng, owner_id):

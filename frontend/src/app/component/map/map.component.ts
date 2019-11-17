@@ -4,7 +4,6 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { FormBuilder } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpService } from 'src/app/services/http.service';
-import { Observable } from 'rxjs';
 import { UpdateService } from 'src/app/services/update.service';
 
 
@@ -33,6 +32,7 @@ export class MapComponent implements OnInit {
   markers = [];
   infoContent = '';
   dibsed = false;
+  offerId: number;
 
   modalRef: BsModalRef;
   offerForm;
@@ -93,6 +93,8 @@ export class MapComponent implements OnInit {
           },
           title: data.title,
           info: data.description,
+          dibsed: data.dibsedby_id,
+          id: data.id,
           options: {
             animation: google.maps.Animation.DROP
           }
@@ -101,19 +103,25 @@ export class MapComponent implements OnInit {
     });
   }
 
-  openInfo(marker: MapMarker, content) {
-    this.dibsed = false;
-    this.infoContent = content;
+  openInfo(marker: MapMarker, markerObject) {
+    this.dibsed = Boolean(markerObject.dibsed);
+    this.offerId = markerObject.id;
     this.infoWindow.open(marker);
   }
 
   dibs() {
-    this.dibsed = true;
-    this.infoContent = 'Dibsed';
+    const user_id = this.cookieService.get('user_id'); 
+    if (user_id) {
+      const requestData = {
+        offer_id: this.offerId,
+        user_id: user_id
+      }
+      this.dibsed = true;
+      this.httpService.dibs(requestData).subscribe(response => {
+        this.updateService.refresh();
+      });
+    } else {
+      alert('Please log in to dibs.')
+    }
   }
-
-  infoClosed() {
-    this.dibsed = false;
-  }
-
 }

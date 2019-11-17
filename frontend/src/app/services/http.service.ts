@@ -38,6 +38,14 @@ export class HttpService {
     return this.http.get<any>(api_url+'/offers/'+id);
   }
 
+  dibs(data) {
+    return this.http.post<any>(api_url+'/dibs', data, this.httpHeader);
+  }
+
+  undibs(data) {
+    return this.http.post<any>(api_url+'/undibs', data, this.httpHeader);
+  }
+
   getDibsesFor(id: string) {
     return this.http.get<any>(api_url+'/dibses/'+id);
   }

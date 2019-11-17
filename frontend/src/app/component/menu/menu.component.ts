@@ -78,4 +78,18 @@ export class MenuComponent implements OnInit {
     })
   }
 
+  undibs(id) {
+    const request = {
+      offer_id: id
+    }
+    this.httpService.undibs(request).subscribe(response => {
+      this.getDibses();
+      this.updateService.refresh();
+    },
+    error => {
+      alert('Couldn\'t undibs');
+      console.log(error);
+    })
+  }
+
 }

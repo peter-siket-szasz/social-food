@@ -42,6 +42,38 @@ def get_offers_for(user):
     return jsonify(offers), 200
 
 
+@app.route('/dibs', methods=["POST"])
+def dibs():
+    ids = request.get_json()
+    user_id = ids["user_id"]
+    offer_id = ids["offer_id"]
+
+    session = Session()
+    offer = session.query(Offer).filter(Offer.id==offer_id).first()
+
+    offer.dibsedby_id = user_id
+    session.commit()
+
+    session.close()
+    return "", 200
+
+
+@app.route('/undibs', methods=["POST"])
+def undibs():
+    id = request.get_json()["offer_id"]
+
+    session = Session()
+    offer = session.query(Offer).filter(Offer.id==id).first()
+
+    offer.dibsedby_id = None
+    session.commit()
+    offer = session.query(Offer).filter(Offer.id==id).first()
+    app.logger.debug(offer.dibsedby_id)
+
+    session.close()
+    return "", 200
+
+
 @app.route('/dibses/<user>')
 def get_dibses(user):
     session = Session()
@@ -121,21 +153,17 @@ def login():
     session = Session()
 
     user_object = session.query(User).filter(User.name==username).first()
-    app.logger.debug(user_object)
 
     schema = UserSchema()
     user = schema.dump(user_object)
-    app.logger.debug(user)
     session.close()
 
     if not user:
         return jsonify({"error": "No user with that name"}), 200
     
     if posted_creds["pw"] == user["pw"]:
-        app.logger.debug(user["id"])
         return jsonify({"id": user["id"], "name": user["name"]}), 200
     else:
-        app.logger.debug("Incorrect pw")
         return jsonify({"error": "Incorrect password"}), 200
     
 
