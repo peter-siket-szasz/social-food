@@ -17,4 +17,21 @@
 
 button.delete {
     float: right;
+    min-width: 75.5px;
+}
+
+.dibs-title {
+    max-width: 40%;
+}
+
+.owner-tg {
+    max-width: 40%;
+}
+
+.stat {
+    width: 50%;
+}
+
+.modal-header {
+    flex-direction: column;
 }

@@ -8,7 +8,7 @@
             <a class="nav-item nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" (click)="openModal(dibsModal, 'dibs')">My Dibses</a>
             <a class="nav-item nav-link" (click)="openModal(offerModal, 'offer')">My Offers</a>
-            <a class="nav-item nav-link" href="#">Profile</a>
+            <a class="nav-item nav-link" (click)="openModal(profileModal, 'profile')">Profile</a>
             <app-login *ngIf="mobile" [username]="username"></app-login>
         </div>
     </div>
@@ -21,7 +21,7 @@
         <mat-list>
             <mat-list-item *ngIf="offers.length === 0">No offers so far</mat-list-item>
             <mat-list-item color="accent" *ngFor="let offer of offers; last as isLast">
-                <span class="title">{{offer.title}}</span>
+                <span class="offer-title">{{offer.title}}</span>
                 <button mat-raised-button color="warn" class="delete" (click)="deleteOffer(offer.id)">Delete</button>
                 <mat-divider *ngIf="!isLast"></mat-divider>
             </mat-list-item>
@@ -38,11 +38,50 @@
         <mat-list>
             <mat-list-item *ngIf="dibses.length === 0">No dibses so far</mat-list-item>
             <mat-list-item color="accent" *ngFor="let dibs of dibses; last as isLast">
-                <span class="title">{{dibs.title}}</span>
+                <span class="dibs-title">{{dibs.title}}</span>
+                <span class="owner-tg">TG: {{dibs.owner.telegram}}</span>
                 <button mat-raised-button color="warn" class="delete" (click)="undibs(dibs.id)">Undibs</button>
                 <mat-divider *ngIf="!isLast"></mat-divider>
             </mat-list-item>
         </mat-list>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" type="button" (click)="closeModal()">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #profileModal>
+    <div *ngFor="let prof of profile" class="modal-header">
+        <h2>Profile Info</h2>
+        <div class="profile-info">
+            <p><strong>Name: </strong>{{prof.name}}</p>
+            <p><strong>Email: </strong>{{prof.name}}</p>
+            <p><strong>TG: </strong>{{prof.email}}</p>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="stats row">
+            <h2 class="col-12">My Impact</h2>
+            <div class="stat col-6">
+                <mat-icon>shopping_cart</mat-icon>
+                <p>Food dibsed: 2</p>
+            </div>
+            <div class="stat col-6">
+                <mat-icon>attach_money</mat-icon>
+                <p>Money saved: 12€</p>
+
+            </div>
+            <div class="stat col-6">
+                <mat-icon>timer</mat-icon>
+                <p>Time spared: 1h</p>
+
+            </div>
+            <div class="stat col-6">
+                <mat-icon>cloud</mat-icon>
+                <p>CO2 saved: 5kg</p>
+
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
         <button class="btn" type="button" (click)="closeModal()">Close</button>

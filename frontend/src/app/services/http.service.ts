@@ -26,6 +26,10 @@ export class HttpService {
     return this.http.post<any>(api_url+'/login', data, this.httpHeader);
   }
 
+  getUser(id: string) {
+    return this.http.get(api_url+'/users/'+id);
+  }
+
   addOffer(data) {
     return this.http.post<any>(api_url+'/addoffer', data, this.httpHeader);
   }

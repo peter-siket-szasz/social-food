@@ -3,6 +3,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { HttpService } from 'src/app/services/http.service';
 import { CookieService } from 'ngx-cookie-service';
 import { UpdateService } from 'src/app/services/update.service';
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'app-menu',
@@ -17,6 +18,7 @@ export class MenuComponent implements OnInit {
   modalRef: BsModalRef;
   offers = [];
   dibses = [];
+  profile;
 
   constructor(private modalService: BsModalService, private httpService: HttpService, private cookieService: CookieService,
               private updateService: UpdateService) { }
@@ -35,6 +37,8 @@ export class MenuComponent implements OnInit {
     } else if (name == 'dibs') {
       this.dibses = [];
       this.getDibses();
+    } else if (name == 'profile') {
+      this.getProfileInfo();
     }
     this.modalRef = this.modalService.show(template);
   }
@@ -65,7 +69,6 @@ export class MenuComponent implements OnInit {
       alert('Error while getting dibses. Please make sure you are logged in.');
       this.closeModal();
     }
-
   }
 
   deleteOffer(id) {
@@ -92,4 +95,16 @@ export class MenuComponent implements OnInit {
     })
   }
 
+  getProfileInfo() {
+    const id = this.cookieService.get('user_id');
+    if (id) {
+      this.httpService.getUser(id).pipe(map(data => [data])).subscribe(response => {
+        this.profile = response;
+        console.log(this.profile);
+      })
+    } else {
+      alert('Error while getting profile info. Please make sure you are logged in.');
+      this.closeModal();
+    }
+  }
 }

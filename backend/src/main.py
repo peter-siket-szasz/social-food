@@ -42,6 +42,18 @@ def get_offers_for(user):
     return jsonify(offers), 200
 
 
+@app.route('/users/<id>')
+def get_user(id):
+    session = Session()
+    user_object = session.query(User).filter(User.id==id).first()
+
+    schema = UserSchema()
+    user = schema.dump(user_object)
+
+    session.close()
+    return jsonify(user), 200
+
+
 @app.route('/dibs', methods=["POST"])
 def dibs():
     ids = request.get_json()
@@ -145,6 +157,7 @@ def add_user():
     session.close()
     return jsonify(new_user), 200
 
+
 @app.route('/login', methods=["POST"])
 def login():
     posted_creds = request.get_json()
@@ -165,7 +178,6 @@ def login():
         return jsonify({"id": user["id"], "name": user["name"]}), 200
     else:
         return jsonify({"error": "Incorrect password"}), 200
-    
 
 
 @app.route('/')
