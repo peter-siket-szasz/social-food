@@ -5,12 +5,41 @@
     </button>
     <div class="collapse navbar-collapse" [collapse]="isCollapsed" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="#">Fetch food</a>
-            <a class="nav-item nav-link" href="#">Offer food</a>
+            <a class="nav-item nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" (click)="openModal(dibsModal, 'dibs')">My Dibses</a>
+            <a class="nav-item nav-link" (click)="openModal(offerModal, 'offer')">My Offers</a>
             <a class="nav-item nav-link" href="#">Profile</a>
             <app-login *ngIf="mobile" [username]="username"></app-login>
         </div>
     </div>
     <app-login *ngIf="!mobile" [username]="username"></app-login>
 </nav>
+
+<ng-template #offerModal>
+    <div class="modal-header">My offers</div>
+    <div class="modal-body">
+        <mat-list>
+            <mat-list-item *ngIf="offers.length === 0">No offers so far</mat-list-item>
+            <mat-list-item color="accent" *ngFor="let offer of offers; last as isLast">
+                <span class="title">{{offer.title}}</span>
+                <button mat-raised-button color="warn" class="delete" (click)="deleteOffer(offer.id)">Delete</button>
+                <mat-divider *ngIf="!isLast"></mat-divider>
+            </mat-list-item>
+        </mat-list>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" type="button" (click)="closeModal()">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #dibsModal>
+    <div class="modal-header">My offers</div>
+    <div class="modal-body">
+        <div>
+            Dibs 1
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" type="button" (click)="closeModal()">Close</button>
+    </div>
+</ng-template>

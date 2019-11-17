@@ -29,6 +29,28 @@ def get_offers():
     session.close()
     return jsonify(offers), 201
 
+@app.route('/offers/<user>')
+def get_offers_for(user):
+    session = Session()
+    offer_objects = session.query(Offer).filter(Offer.owner_id==user)
+
+    schema = OfferSchema(many=True)
+    offers = schema.dump(offer_objects)
+
+    session.close()
+    return jsonify(offers), 201
+
+@app.route('/offers/<id>', methods=["DELETE"])
+def delete_offer(id):
+    session = Session()
+    offer = session.query(Offer).filter(Offer.id==id).first()
+    session.delete(offer)
+    session.commit()
+    session.close()
+    return "", 201
+
+
+
 @app.route('/users')
 def get_users():
     # Database

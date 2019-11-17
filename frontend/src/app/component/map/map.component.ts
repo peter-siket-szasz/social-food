@@ -5,6 +5,7 @@ import { FormBuilder } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpService } from 'src/app/services/http.service';
 import { Observable } from 'rxjs';
+import { UpdateService } from 'src/app/services/update.service';
 
 
 @Component({
@@ -14,7 +15,6 @@ import { Observable } from 'rxjs';
 })
 export class MapComponent implements OnInit {
   @ViewChild(MapInfoWindow, {static: false}) infoWindow: MapInfoWindow;
-  @Input() refreshEvent: Observable<void>;
 
   width = document.getElementById('wrapper').offsetWidth - 30 + 'px';
   height = window.innerHeight - 200 + 'px';
@@ -39,7 +39,7 @@ export class MapComponent implements OnInit {
   mapClickEvent;
 
   constructor(private modalService: BsModalService, private formBuilder: FormBuilder,
-              private cookieService: CookieService, private httpService: HttpService) {
+              private cookieService: CookieService, private httpService: HttpService, private updateService: UpdateService) {
     this.offerForm = this.formBuilder.group({
       title: '',
       description: ''
@@ -48,7 +48,7 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.getOffers();
-    this.refreshEvent.subscribe(_ => this.getOffers());
+    this.updateService.refreshObs.subscribe(_ => this.getOffers());
   }
 
   openOfferModal(template: TemplateRef<any>, event) {

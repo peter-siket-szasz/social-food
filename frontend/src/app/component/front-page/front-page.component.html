@@ -6,9 +6,9 @@
         <div>
             <div class="map-header">
                 <p>Google maps here</p>
-                <button mat-raised-button (click)="emitRefresh()"><mat-icon>refresh</mat-icon></button>
+                <button mat-raised-button color="primary" (click)="refresh()"><mat-icon>refresh</mat-icon></button>
             </div>
-            <app-map [refreshEvent]="refreshSubject.asObservable()"></app-map>
+            <app-map></app-map>
         </div>
     </div>
 </div>

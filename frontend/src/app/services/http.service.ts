@@ -33,4 +33,12 @@ export class HttpService {
   getOffers() {
     return this.http.get<any>(api_url+'/offers');
   }
+
+  getOffersFor(id: string) {
+    return this.http.get<any>(api_url+'/offers/'+id);
+  }
+
+  deleteOffer(id: string) {
+    return this.http.delete(api_url+'/offers/'+id);
+  }
 }

@@ -2,7 +2,19 @@
     padding: 0 15px;
 }
 
+.nav-link {
+    cursor: pointer;
+}
+
 ::ng-deep map-info-window {
     display: flex;
     flex-direction: column;
+}
+
+::ng-deep .mat-list-item-content {
+    justify-content: space-between;
+}
+
+button.delete {
+    float: right;
 }

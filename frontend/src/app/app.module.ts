@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { MatMenuModule, MatIconModule, MatButtonModule } from '@angular/material';
+import { MatMenuModule, MatIconModule, MatButtonModule, MatListModule } from '@angular/material';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -30,6 +30,7 @@ import { LoginComponent } from './component/login/login.component';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
+    MatListModule,
     CollapseModule.forRoot(),
     ModalModule.forRoot(),
     FormsModule,
