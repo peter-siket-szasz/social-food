@@ -8,7 +8,7 @@
     </map-marker>
     <map-info-window>
         <div *ngIf="openMarker" class="info-wrapper">
-            <h2>{{openMarker.title}}</h2>
+            <h2 class="title">{{openMarker.title}}</h2>
             <p class="description">{{openMarker.description}}</p>
             <p class="tg">Owner TG: {{openMarker.tg}}</p>
             <button mat-raised-button class="dibs" color="primary" *ngIf="!dibsed" (click)="dibs()">Dibs</button>
