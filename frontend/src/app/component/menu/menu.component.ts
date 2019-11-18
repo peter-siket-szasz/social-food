@@ -31,10 +31,10 @@ export class MenuComponent implements OnInit {
       alert('Please log in first');
       return;
     }
-    if (name == 'offer') {
+    if (name === 'offer') {
       this.offers = [];
       this.getOffers();
-    } else if (name == 'dibs') {
+    } else if (name === 'dibs') {
       this.dibses = [];
       this.getDibses();
     } else if (name == 'profile') {
@@ -52,19 +52,19 @@ export class MenuComponent implements OnInit {
     if (id) {
       this.httpService.getOffersFor(id).subscribe(response => {
         this.offers = response;
-      })
+      });
     } else {
       alert('Error while getting offers. Please make sure you are logged in.');
       this.closeModal();
     }
   }
-  
+
   getDibses() {
     const id = this.cookieService.get('user_id');
     if (id) {
       this.httpService.getDibsesFor(id).subscribe(response => {
         this.dibses = response;
-      })
+      });
     } else {
       alert('Error while getting dibses. Please make sure you are logged in.');
       this.closeModal();
@@ -78,13 +78,13 @@ export class MenuComponent implements OnInit {
     },
     error => {
       alert('Deleting failed');
-    })
+    });
   }
 
   undibs(id) {
     const request = {
       offer_id: id
-    }
+    };
     this.httpService.undibs(request).subscribe(response => {
       this.getDibses();
       this.updateService.refresh();
@@ -92,7 +92,7 @@ export class MenuComponent implements OnInit {
     error => {
       alert('Couldn\'t undibs');
       console.log(error);
-    })
+    });
   }
 
   getProfileInfo() {

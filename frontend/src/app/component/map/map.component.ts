@@ -112,18 +112,18 @@ export class MapComponent implements OnInit {
   }
 
   dibs() {
-    const user_id = this.cookieService.get('user_id'); 
-    if (user_id) {
+    const userId = this.cookieService.get('user_id');
+    if (userId) {
       const requestData = {
         offer_id: this.offerId,
-        user_id: user_id
-      }
+        user_id: userId
+      };
       this.dibsed = true;
       this.httpService.dibs(requestData).subscribe(response => {
         this.updateService.refresh();
       });
     } else {
-      alert('Please log in to dibs.')
+      alert('Please log in to dibs.');
     }
   }
 }

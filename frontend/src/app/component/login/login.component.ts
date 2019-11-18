@@ -62,11 +62,11 @@ export class LoginComponent implements OnInit {
       } else {
         this.cookieService.set('user_id', response.id);
         this.cookieService.set('user_name', response.name);
-        if (this.cookieService.get('user_name') == response.name) {
+        if (this.cookieService.get('user_name') === response.name) {
           this.credentialService.changeUser(response.name);
           this.closeModal();
         } else {
-          alert('Login failed. Please check that cookies are allowed.')
+          alert('Login failed. Please check that cookies are allowed.');
           this.closeModal();
         }
       }
