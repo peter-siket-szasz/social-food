@@ -31,7 +31,7 @@
     <div class="modal-body">
         <div class="login">
             <form [formGroup]="registerForm" (ngSubmit)="registerUser(registerForm.value)">
-                <label for="name">Name</label>
+                <label for="name">Name (used for log in)</label>
                 <input type="text" formControlName="name">
                 <label for="email">Email</label>
                 <input type="text" formControlName="email">

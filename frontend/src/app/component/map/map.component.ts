@@ -121,6 +121,7 @@ export class MapComponent implements OnInit {
       this.dibsed = true;
       this.httpService.dibs(requestData).subscribe(response => {
         this.updateService.refresh();
+        alert('Food dibsed! You should now contact the owner ('+ this.openMarker.tg +')');
       });
     } else {
       alert('Please log in to dibs.');

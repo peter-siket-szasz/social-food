@@ -22,6 +22,7 @@
             <mat-list-item *ngIf="offers.length === 0">No offers so far</mat-list-item>
             <mat-list-item color="accent" *ngFor="let offer of offers; last as isLast">
                 <span class="offer-title">{{offer.title}}</span>
+                <span *ngIf="offer.dibsedby" class="owner-tg">Dibsed by (TG): {{offer.dibsedby.telegram}}</span>
                 <button mat-raised-button color="warn" class="delete" (click)="deleteOffer(offer.id)">Delete</button>
                 <mat-divider *ngIf="!isLast"></mat-divider>
             </mat-list-item>
@@ -55,8 +56,8 @@
         <h2>Profile Info</h2>
         <div class="profile-info">
             <p><strong>Name: </strong>{{prof.name}}</p>
-            <p><strong>Email: </strong>{{prof.name}}</p>
-            <p><strong>TG: </strong>{{prof.email}}</p>
+            <p><strong>Email: </strong>{{prof.email}}</p>
+            <p><strong>TG: </strong>{{prof.telegram}}</p>
         </div>
     </div>
     <div class="modal-body">
@@ -68,7 +69,7 @@
             </div>
             <div class="stat col-6">
                 <mat-icon>attach_money</mat-icon>
-                <p>Money saved: 12€</p>
+                <p>Money saved: 5€</p>
 
             </div>
             <div class="stat col-6">
@@ -78,7 +79,7 @@
             </div>
             <div class="stat col-6">
                 <mat-icon>cloud</mat-icon>
-                <p>CO2 saved: 5kg</p>
+                <p>CO2 saved: 4.5kg</p>
 
             </div>
         </div>

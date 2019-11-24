@@ -100,7 +100,6 @@ export class MenuComponent implements OnInit {
     if (id) {
       this.httpService.getUser(id).pipe(map(data => [data])).subscribe(response => {
         this.profile = response;
-        console.log(this.profile);
       })
     } else {
       alert('Error while getting profile info. Please make sure you are logged in.');
