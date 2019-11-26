@@ -57,4 +57,8 @@ export class HttpService {
   deleteOffer(id: string) {
     return this.http.delete(api_url+'/offers/'+id);
   }
+
+  deleteUser(id: string) {
+    return this.http.delete(api_url+'/users/'+id);
+  }
 }

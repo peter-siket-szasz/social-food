@@ -19,6 +19,7 @@ export class MenuComponent implements OnInit {
   offers = [];
   dibses = [];
   profile;
+  id: number;
 
   constructor(private modalService: BsModalService, private httpService: HttpService, private cookieService: CookieService,
               private updateService: UpdateService) { }
@@ -103,6 +104,19 @@ export class MenuComponent implements OnInit {
       })
     } else {
       alert('Error while getting profile info. Please make sure you are logged in.');
+      this.closeModal();
+    }
+  }
+  
+  deleteUser() {
+    const id = this.cookieService.get('user_id');
+    if (id) {
+      this.httpService.deleteUser(id).subscribe(response => {
+        this.closeModal();
+        alert('Profile succesfully deleted');
+      })
+    } else {
+      alert('Error while deleting profile.');
       this.closeModal();
     }
   }

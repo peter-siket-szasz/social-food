@@ -70,21 +70,29 @@
             <div class="stat col-6">
                 <mat-icon>attach_money</mat-icon>
                 <p>Money saved: 5€</p>
-
             </div>
             <div class="stat col-6">
                 <mat-icon>timer</mat-icon>
                 <p>Time spared: 1h</p>
-
             </div>
             <div class="stat col-6">
                 <mat-icon>cloud</mat-icon>
                 <p>CO2 saved: 4.5kg</p>
-
             </div>
         </div>
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer profile">
+        <button class="delete" mat-flat-button color="warn" (click)="closeModal(); openModal(confirmModal)">Delete profile</button>
         <button class="btn" type="button" (click)="closeModal()">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #confirmModal>
+    <div class="modal-body">
+        <h3>Are you sure you want to delete your profile?</h3>
+    </div>
+    <div class="modal-footer profile">
+        <button mat-flat-button color="warn" (click)="deleteUser()">Delete</button>
+        <button mat-button (click)="closeModal()">Cancel</button>
     </div>
 </ng-template>

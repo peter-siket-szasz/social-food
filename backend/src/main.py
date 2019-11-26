@@ -107,6 +107,15 @@ def delete_offer(id):
     session.close()
     return "", 200
 
+@app.route('/users/<id>', methods=["DELETE"])
+def delete_user(id):
+    session = Session()
+    user = session.query(User).filter(User.id==id).first()
+    session.delete(user)
+    session.commit()
+    session.close()
+    return "", 200
+
 
 @app.route('/users')
 def get_users():
